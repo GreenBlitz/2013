@@ -5,8 +5,8 @@
 
 class Spinner: public Subsystem {
 private:
-	Talon* motor;
 public:
+	Victor* motor;
 	Spinner();
 	void InitDefaultCommand();
 	void SetMotorSpeed(float speed);

@@ -9,20 +9,8 @@ Chassis::Chassis() : PIDSubsystem("Chassis", Kp, Ki, Kd) {
 	frontRight = new Talon(CHASSIS_TALON_TR_PORT);
 	rearRight = new Talon(CHASSIS_TALON_BR_PORT);
 	drive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
-	drive->SetInvertedMotor(RobotDrive::kFrontLeftMotor, true);
-	drive->SetInvertedMotor(RobotDrive::kFrontRightMotor, true);
-	drive->SetInvertedMotor(RobotDrive::kRearLeftMotor, true);
-	drive->SetInvertedMotor(RobotDrive::kRearRightMotor, true);
 	drive->SetExpiration(0.5);
 	gyro = new Gyro(CHASSIS_GYRO_PORT);
-	leftEncoder = new Encoder(CHASSIS_LEFT_ENCODER_A, CHASSIS_LEFT_ENCODER_B);
-	rightEncoder = new Encoder(CHASSIS_RIGHT_ENCODER_A, CHASSIS_RIGHT_ENCODER_B);
-	leftEncoder->SetDistancePerPulse(DISTANCE_PER_PULSE);
-	rightEncoder->SetDistancePerPulse(DISTANCE_PER_PULSE);
-	leftEncoder->Start();
-	rightEncoder->Start();
-	leftEncoder->SetReverseDirection(true);
-	ResetEncoders();
 }
 
 double Chassis::ReturnPIDInput() {
@@ -68,23 +56,10 @@ void Chassis::TankDrive(Joystick* leftStick,Joystick* rightStick){
 }
 
 void Chassis::Status() {
-	SmartDashboard::PutNumber("leftEncoder",leftEncoder->GetDistance());
-	SmartDashboard::PutNumber("rightEncoder",rightEncoder->GetDistance());
-	SmartDashboard::PutNumber("average Encoder",GetEncodersDistance());
-	//SmartDashboard::PutNumber("gyro angle", gyro->GetAngle());
-}
-
-float Chassis::GetEncodersDistance() {
-	return (leftEncoder->GetDistance() + rightEncoder->GetDistance()) / 2;
 }
 
 void Chassis::TankDrive(float left, float right)
 {
 
 	drive->TankDrive(left,right,false);
-}
-
-void Chassis::ResetEncoders() {
-	leftEncoder->Reset();
-	rightEncoder->Reset();
 }

@@ -2,8 +2,6 @@
 #include "Commands/TurnByXDegrees.h"
 #include "Commands/SetShooterLiftState.h"
 #include "Commands/ShootAtRPM.h"
-#include "Commands/SetVerticalAngle.h"
-#include "Commands/TiltServoByJoystick.h"
 #include "Commands/SDBShooting.h"
 #include "Commands/LoadX.h"
 #include "Commands/SetArcadeDrive.h"
@@ -12,7 +10,6 @@
 #include "Commands/SpinnerInAndOut.h"
 #include "Commands/SlowTankDrive.h"
 
-#include "Commands/DriveForXCentimeters.h"
 #include "Commands/SpinStackMotorForTime.h"
 #include "Commands/SpinnerAlwaysOut.h"
 #include "Commands/ChangeShooterSetpoint.h"
@@ -62,7 +59,6 @@ void OI::mapJoysticks() {
 	GetSubJSButton(8)->WhenPressed(new ShootAtRPM(2750));
 	GetSubJSButton(9)->WhenPressed(new ChangeShooterSetpoint(-25));
 	GetSubJSButton(10)->WhenPressed(new ChangeShooterSetpoint(25));
-	GetSubJSButton(11)->WhileHeld(new TiltServoByJoystick());
 	topAxis->WhenPressed(new SetArcadeDrive(0.35, 0.0, 0.2));
 	bottomAxis->WhenPressed(new SetArcadeDrive(-0.35, 0.0, 0.2));
 	leftAxis->WhenPressed(new SetArcadeDrive(0.0, 0.7, 0.2));

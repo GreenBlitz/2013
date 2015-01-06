@@ -3,7 +3,7 @@
 #include "../Commands/DefaultStack.h"
 
 Spinner::Spinner() : Subsystem("Spinner") {
-	motor = new Talon(STACK_TALON_PORT);
+	motor = new Victor(STACK_VICTOR_PORT);
 	motor->SetExpiration(0.5);
 }
     

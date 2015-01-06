@@ -2,22 +2,20 @@
 #include "Commands/Command.h"
 #include "CommandBase.h"
 #include "Commands/ShooterDoNothing.h"
-#include "Commands/AutoGitlitz.h"
 #include "Commands/SetShooterLiftState.h"
 #include "Commands/ShootAtRPM.h"
 #include "Commands/LoadX.h"
 class CommandBasedRobot : public IterativeRobot {
 private:
-	Command* autonom;
 	Command* shoot;
 	virtual void RobotInit() {
 		CommandBase::init();
-		autonom=new AutoGitlitz();
 		shoot=new ShootAtRPM(2800);
+		LiveWindow::GetInstance()->AddActuator("stack", "stack?>", CommandBase::spinner->motor);
+		CommandBase::compressor->Start();
 	}
 	
 	virtual void AutonomousInit() {
-		autonom->Start();
 	}
 	
 	virtual void AutonomousPeriodic() {
@@ -29,7 +27,6 @@ private:
 		CommandBase::buchnah->BuchnahIn();
 		CommandBase::chassis->SetSafety(true);
 		shoot->Cancel();
-		autonom->Cancel();
 	}
 	
 	virtual void TeleopPeriodic() {
@@ -42,6 +39,7 @@ private:
 	}
 	
 	virtual void DisabledInit() {
+		Scheduler::GetInstance()->RemoveAll();
 	}
 };
 
