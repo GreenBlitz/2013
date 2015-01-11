@@ -11,6 +11,7 @@ SpinStackMotorForTime::SpinStackMotorForTime(float speed, float time)
 
 // Called just before this Command runs the first time
 void SpinStackMotorForTime::Initialize() {
+	SmartDashboard::PutBoolean("spinmotorfor time", true);
 	SetTimeout(this->time);
 }
 
@@ -26,7 +27,8 @@ bool SpinStackMotorForTime::IsFinished() {
 
 // Called once after isFinished returns true
 void SpinStackMotorForTime::End() {
-	//spinner->SetMotorSpeed(0.0); todo
+	//spinner->SetMotorSpeed(0.0);
+	SmartDashboard::PutBoolean("spinmotorfor time", false);
 }
 
 // Called when another command which requires one or more of the same

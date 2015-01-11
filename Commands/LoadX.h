@@ -12,7 +12,7 @@ class LoadX: public CommandGroup {
 private:
 	static const double WAIT_TIME = 0.1;
 protected:
-	virtual bool IsFinished();
+	//virtual bool IsFinished();
 public:	
 	LoadX(int x);
 };

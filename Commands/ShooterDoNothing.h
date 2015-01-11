@@ -10,7 +10,6 @@
  */
 class ShooterDoNothing: public CommandBase {
 private:
-	Timer* timer;
 public:
 	ShooterDoNothing();
 	virtual void Initialize();

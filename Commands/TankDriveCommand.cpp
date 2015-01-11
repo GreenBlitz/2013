@@ -11,7 +11,7 @@ void TankDriveCommand::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void TankDriveCommand::Execute() {
-	chassis->TankDrive(oi->GetLeftJoystick(),oi->GetRightJoystick());
+	chassis->TankDrive(oi->GetMainLeft(),oi->GetMainRight());
 
 }
 

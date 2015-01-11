@@ -24,6 +24,10 @@ void CommandBase::init() {
 	shooter = new Shooter();
 	
 	oi = new OI();
+	
+	SmartDashboard::PutData(shooter);
+	SmartDashboard::PutData(buchnah);
+	SmartDashboard::PutData(spinner);
 }
 
 
@@ -32,5 +36,4 @@ void CommandBase::Status() {
 	chassis->Status();
 	shooterLift->Status();
 	shooter->Status();
-	SmartDashboard::PutData(spinner);
 }

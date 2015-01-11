@@ -9,10 +9,15 @@ Shooter::Shooter() : PIDSubsystem("Shooter", Kp, Ki, Kd) {
 	motor2=new Jaguar(SHOOTER_MOTOR2_PORT);
 	motor1->SetExpiration(0.5);
 	motor2->SetExpiration(0.5);
-	encoder=new Encoder(SHOOTER_ENCODER_B_PORT,
-			SHOOTER_ENCODER_A_PORT);
+	encoder=new Encoder(SHOOTER_ENCODER_A_PORT,
+			SHOOTER_ENCODER_B_PORT);
+	encoder->SetReverseDirection(true);
 	encoder->SetDistancePerPulse(6.0/25.0);
 	encoder->Start();
+	
+	LiveWindow::GetInstance()->AddActuator("Shooter", "Motor1", motor1);
+	LiveWindow::GetInstance()->AddActuator("Shooter", "Motor2", motor2);
+	
 }
 
 double Shooter::ReturnPIDInput() {
@@ -49,8 +54,12 @@ float Shooter::GetMotorSpeed()
 }
 
 void Shooter::Status() {
-	SmartDashboard::PutNumber("current rpm", GetRPM());
+	SmartDashboard::PutNumber("encoder_rate", GetRPM());
+	SmartDashboard::PutNumber("encoder_get", encoder->Get());
+	SmartDashboard::PutNumber("encoder_distance", encoder->GetDistance());
+	SmartDashboard::PutNumber("encoder_raw", encoder->GetRaw());
 	SmartDashboard::PutNumber("setpoint RPM", GetSetpoint());
+	
 }
 void Shooter::ResetPID()
 {

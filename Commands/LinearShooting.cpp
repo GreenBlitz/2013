@@ -20,6 +20,7 @@ void LinearShooting::Execute() {
 	{
 		counter--;
 	}
+	SmartDashboard::PutBoolean("LinearShooting", true);
 	//SmartDashboard::PutNumber("counter", counter);
 }
 
@@ -37,6 +38,7 @@ bool LinearShooting::IsFinished() {
 // Called once after isFinished returns true
 void LinearShooting::End() {
 	SmartDashboard::PutBoolean("shooter ready",true);
+	SmartDashboard::PutBoolean("LinearShooting", false);
 }
 
 // Called when another command which requires one or more of the same
