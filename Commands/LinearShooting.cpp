@@ -13,15 +13,14 @@ void LinearShooting::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void LinearShooting::Execute() {
-	if (shooter->GetRPM() > (shooter->GetSetpoint() - 100.0)
-			&& shooter->GetRPM() < (shooter->GetSetpoint() + 250.0))
+	if (shooter->GetRPM() > (shooter->GetSetpoint() - 200.0)
+			&& shooter->GetRPM() < (shooter->GetSetpoint() + 3000.0))
 		counter++;
 	else if (counter > 0) 
 	{
 		counter--;
 	}
-	SmartDashboard::PutBoolean("LinearShooting", true);
-	//SmartDashboard::PutNumber("counter", counter);
+	SmartDashboard::PutNumber("counter", counter);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +37,6 @@ bool LinearShooting::IsFinished() {
 // Called once after isFinished returns true
 void LinearShooting::End() {
 	SmartDashboard::PutBoolean("shooter ready",true);
-	SmartDashboard::PutBoolean("LinearShooting", false);
 }
 
 // Called when another command which requires one or more of the same

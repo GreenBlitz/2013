@@ -12,7 +12,7 @@
 
 LoadX::LoadX(int x) {
 	for(int i=0;i<x;i++){
-		AddSequential(new LinearShooting());
+		//AddSequential(new LinearShooting());
 		AddSequential(new SpinStackMotorForTime(1.0, 0.1));
 		AddSequential(new SpinStackMotorForTime(-0.3, 0.5));
 		AddSequential(new SpinnerInAndOut());

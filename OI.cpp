@@ -3,6 +3,7 @@
 #include "Commands/SetShooterLiftState.h"
 #include "Commands/ShootAtRPM.h"
 #include "Commands/SDBShooting.h"
+#include "Commands/ShootAtVoltage.h"
 #include "Commands/LoadX.h"
 #include "Commands/SetArcadeDrive.h"
 #include "Commands/SetSpinnerState.h"
@@ -30,12 +31,13 @@ OI::OI() {
 	
 	
 	
-	mainDriverButtons[OI::LOG_A]->WhenPressed(new SetShooterLiftState(true));
-	mainDriverButtons[OI::LOG_B]->WhenPressed(new SetShooterLiftState(false));
-	mainDriverButtons[OI::LOG_X]->WhenPressed(new LoadX(1));
-	mainDriverButtons[OI::LOG_Y]->WhenPressed(new ShootAtRPM(1000));
-	mainDriverButtons[OI::LOG_RB]->WhenPressed(new SpinnerInAndOut());
-	mainDriverButtons[OI::LOG_LB]->WhenPressed(new SpinStackMotorForTime(-0.5f, 100.0));
+	mainDriverButtons[OI::LOG_RB]->WhenPressed(new SetShooterLiftState(true));
+	mainDriverButtons[OI::LOG_LB]->WhenPressed(new SetShooterLiftState(false));
+	mainDriverButtons[OI::LOG_A]->WhenPressed(new LoadX(1));
+	mainDriverButtons[OI::LOG_X]->WhenPressed(new ShootAtVoltage(0.8));
+	mainDriverButtons[OI::LOG_B]->WhenPressed(new ShootAtVoltage(0.5));
+	mainDriverButtons[OI::LOG_Y]->WhenPressed(new ShooterDoNothing());
+	mainDriverButtons[OI::LOG_Start]->WhenPressed(new SpinnerInAndOut());
 	
 	
 	
@@ -64,14 +66,14 @@ OI::OI() {
 
 float OI::GetMainRight()
 {
-	return mainDriver->GetRawAxis(5);
+	return mainDriver->GetY();
 }
 
 
 
 float OI::GetMainLeft()
 {
-	return mainDriver->GetY();
+	return mainDriver->GetRawAxis(5);
 }
 
 

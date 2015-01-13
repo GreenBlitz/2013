@@ -2,6 +2,7 @@
 #include "Commands/Command.h"
 #include "CommandBase.h"
 #include "Commands/ShooterDoNothing.h"
+#include "Commands/ShootAtVoltageFromSDB.h"
 #include "Commands/SetShooterLiftState.h"
 #include "Commands/ShootAtRPM.h"
 #include "Commands/LoadX.h"
@@ -12,12 +13,8 @@ private:
 	virtual void RobotInit() {
 		CommandBase::init();
 		shoot=new ShootAtRPM(2800);
-		LiveWindow::GetInstance()->AddActuator("stack", "stack?>", CommandBase::spinner->motor);
 		CommandBase::compressor->Start();
-		SmartDashboard::PutData(Scheduler::GetInstance());
-		SmartDashboard::PutData("^^loadx", new LoadX(1));
-		SmartDashboard::PutData("^^shootAt800RPM", new ShootAtRPM(800.0));
-		SmartDashboard::PutData("^^SpinStackMotorForTime", new SpinStackMotorForTime(-0.5f, 0.5));
+		SmartDashboard::PutData("ShooterBySDB", new ShootAtVoltageFromSDB());
 	}
 	
 	virtual void AutonomousInit() {
@@ -36,12 +33,17 @@ private:
 	
 	virtual void TeleopPeriodic() {
 		Scheduler::GetInstance()->Run();
+		SmartDashboard::PutNumber("Avg. RPM", CommandBase::shooter->GetRPM());
+		SmartDashboard::PutNumber("RPM", CommandBase::shooter->GetRawRPM());
+		
 		CommandBase::Status();
 	}
 	
 	virtual void TestPeriodic() {
 		while(IsTest()) {
 			LiveWindow::GetInstance()->Run();
+			LiveWindow::GetInstance()->AddActuator("shooter", "motor2", CommandBase::shooter->motor2);
+			CommandBase::shooter->motor1->Set(CommandBase::shooter->motor2->Get());
 			Wait(0.05);
 		}
 	}

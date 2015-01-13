@@ -12,10 +12,12 @@ void ShootAtRPM::Initialize() {
 	shooter->SetSetpoint(rpm);
 	shooter->Enable();
 	shooter->firstFrizb=true;
+//	shooter->
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShootAtRPM::Execute() {
+	
 }
 
 // Make this return true when this Command no longer needs to run execute()
