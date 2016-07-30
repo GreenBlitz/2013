@@ -13,8 +13,8 @@ void SlowTankDrive::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void SlowTankDrive::Execute() {
-	chassis->TankDrive(oi->GetLeftJoystick()->GetY()/2,
-			oi->GetRightJoystick()->GetY()/2);
+	chassis->TankDrive(oi->GetMainLeft()/2,
+			oi->GetMainRight()/2);
 }
 
 // Make this return true when this Command no longer needs to run execute()

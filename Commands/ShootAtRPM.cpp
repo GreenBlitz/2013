@@ -8,15 +8,16 @@ ShootAtRPM::ShootAtRPM(float rpm) : CommandBase("ShootAtRPM"){
 
 // Called just before this Command runs the first time
 void ShootAtRPM::Initialize() {
-	compressor->Stop();
 	shooter->ResetPID();
 	shooter->SetSetpoint(rpm);
 	shooter->Enable();
 	shooter->firstFrizb=true;
+//	shooter->
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShootAtRPM::Execute() {
+	
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -28,7 +29,6 @@ bool ShootAtRPM::IsFinished() {
 void ShootAtRPM::End() {
 	shooter->Disable();
 	shooter->UsePIDOutput(0.0);
-	compressor->Start();
 }
 
 // Called when another command which requires one or more of the same

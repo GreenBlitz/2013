@@ -2,9 +2,8 @@
 #include "Commands/TurnByXDegrees.h"
 #include "Commands/SetShooterLiftState.h"
 #include "Commands/ShootAtRPM.h"
-#include "Commands/SetVerticalAngle.h"
-#include "Commands/TiltServoByJoystick.h"
 #include "Commands/SDBShooting.h"
+#include "Commands/ShootAtVoltage.h"
 #include "Commands/LoadX.h"
 #include "Commands/SetArcadeDrive.h"
 #include "Commands/SetSpinnerState.h"
@@ -12,11 +11,38 @@
 #include "Commands/SpinnerInAndOut.h"
 #include "Commands/SlowTankDrive.h"
 
-#include "Commands/DriveForXCentimeters.h"
 #include "Commands/SpinStackMotorForTime.h"
 #include "Commands/SpinnerAlwaysOut.h"
 #include "Commands/ChangeShooterSetpoint.h"
 OI::OI() {
+	mainDriver = new Joystick(1);
+	subDriver = new Joystick(2);
+	mainDriverButtons =  new JoystickButton*[13];
+	subDriverButtons = new JoystickButton*[13];
+	for (int i=1; i<13; i++){
+		mainDriverButtons[i] = new JoystickButton(mainDriver,i);
+		subDriverButtons[i] = new JoystickButton(subDriver,i);
+	}
+
+	/*
+	 * snir
+	 */
+	mainDriverSmallAxis = new AxisButton*[4];
+	
+	
+	
+	mainDriverButtons[OI::LOG_RB]->WhenPressed(new SetShooterLiftState(true));
+	mainDriverButtons[OI::LOG_LB]->WhenPressed(new SetShooterLiftState(false));
+	mainDriverButtons[OI::LOG_A]->WhenPressed(new LoadX(1));
+	mainDriverButtons[OI::LOG_X]->WhenPressed(new ShootAtVoltage(0.8));
+	mainDriverButtons[OI::LOG_B]->WhenPressed(new ShootAtVoltage(0.5));
+	mainDriverButtons[OI::LOG_Y]->WhenPressed(new ShooterDoNothing());
+	mainDriverButtons[OI::LOG_Start]->WhenPressed(new SpinnerInAndOut());
+	
+	
+	
+	
+	/*
 	leftStick = new Joystick(LEFT_JOYSTICK_PORT);
 	rightStick = new Joystick(RIGHT_JOYSTICK_PORT);
 	subStick = new Joystick(SUB_JOYSTICK_PORT);
@@ -32,61 +58,23 @@ OI::OI() {
 	rightAxis = new AxisButton(subStick, 5, -1);
 	//SmartDashboard::PutData(new DriveForXCentimeters(0,false));
 	mapJoysticks();
+*/
+
+
+
 }
 
-void OI::mapJoysticks() {
-	Command *shooterLiftUp = new SetShooterLiftState(true);
-	Command *shooterLiftDown = new SetShooterLiftState(false);
-
-	Command* slowTankDrive = new SlowTankDrive();
-	//left
-	GetLeftJSButton(1)->WhileHeld(slowTankDrive);
-	GetLeftJSButton(2)->WhenPressed(new SetArcadeDrive(0.35, 0.0, 0.2));
-	GetLeftJSButton(3)->WhenPressed(new SetArcadeDrive(-0.35, 0.0, 0.1));
-	GetLeftJSButton(4)->WhenPressed(new SetArcadeDrive(0.0, -0.35, 0.1));
-	GetLeftJSButton(5)->WhenPressed(new SetArcadeDrive(0.0, 0.35, 0.1));
-
-	//right
-	GetRightJSButton(1)->WhileHeld(slowTankDrive);
-	GetRightJSButton(2)->WhenPressed(shooterLiftDown);
-	GetRightJSButton(3)->WhenPressed(shooterLiftUp);
-	GetRightJSButton(11)->WhileHeld(new SpinnerAlwaysOut());
-	//sub
-	GetSubJSButton(1)->WhenPressed(new LoadX(1));
-	GetSubJSButton(2)->WhenPressed(new ShooterDoNothing());
-	GetSubJSButton(3)->WhenPressed(new SpinnerInAndOut());
-	GetSubJSButton(4)->WhenPressed(shooterLiftDown);
-	GetSubJSButton(5)->WhenPressed(new SpinStackMotorForTime(-0.5, 100.0));
-	GetSubJSButton(6)->WhenPressed(shooterLiftUp);
-	GetSubJSButton(7)->WhenPressed(new SDBShooting());
-	GetSubJSButton(8)->WhenPressed(new ShootAtRPM(2750));
-	GetSubJSButton(9)->WhenPressed(new ChangeShooterSetpoint(-25));
-	GetSubJSButton(10)->WhenPressed(new ChangeShooterSetpoint(25));
-	GetSubJSButton(11)->WhileHeld(new TiltServoByJoystick());
-	topAxis->WhenPressed(new SetArcadeDrive(0.35, 0.0, 0.2));
-	bottomAxis->WhenPressed(new SetArcadeDrive(-0.35, 0.0, 0.2));
-	leftAxis->WhenPressed(new SetArcadeDrive(0.0, 0.7, 0.2));
-	rightAxis->WhenPressed(new SetArcadeDrive(0.0, -0.7, 0.2));
+float OI::GetMainRight()
+{
+	return mainDriver->GetY();
 }
 
-JoystickButton* OI::GetLeftJSButton(int n) {
-	return leftStickButtons[n - 1];
+
+
+float OI::GetMainLeft()
+{
+	return mainDriver->GetRawAxis(5);
 }
 
-JoystickButton* OI::GetRightJSButton(int n) {
-	return rightStickButtons[n - 1];
-}
 
-JoystickButton* OI::GetSubJSButton(int n) {
-	return subStickButtons[n - 1];
-}
 
-Joystick* OI::GetLeftJoystick() {
-	return leftStick;
-}
-Joystick* OI::GetRightJoystick() {
-	return rightStick;
-}
-Joystick* OI::GetSubDriverJoystick() {
-	return subStick;
-}

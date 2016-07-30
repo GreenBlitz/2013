@@ -6,7 +6,6 @@
 #include "SubSystems/Chassis.h"
 #include "SubSystems/ShooterLift.h"
 #include "Subsystems/Shooter.h"
-#include "Subsystems/CameraTilt.h"
 #include "Subsystems/Spinner.h"
 #include "Subsystems/Buchnah.h"
 
@@ -23,12 +22,11 @@ public:
 	// Create a single static instance of all of your subsystems
 	static Chassis * chassis;
 	static OI *oi;
+	static Compressor *	compressor;
 	static ShooterLift* shooterLift;
-	static Compressor * compressor;
 	static Buchnah* buchnah;
 	static Spinner* spinner;
 	static Shooter * shooter;
-	static CameraTilt * cameraTilt;
 	
 };
 

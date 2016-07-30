@@ -32,7 +32,7 @@ MODE_DIR := NonDebug
 endif
 OBJ_DIR := .
 WS_ROOT_DIR := C:/WindRiver/workspace
-PRJ_ROOT_DIR := $(WS_ROOT_DIR)/Final2013_NoVision
+PRJ_ROOT_DIR := C:/Users/user/Documents/GitHub/2013
 
 
 

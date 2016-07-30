@@ -4,7 +4,6 @@ SetShooterLiftState::SetShooterLiftState(bool up)
 	: CommandBase("SetShooterLiftState"){
 	// Use requires() here to declare subsystem dependencies
 	Requires(shooterLift);
-	Requires(cameraTilt);
 	this->up = up;
 }
 
@@ -12,11 +11,9 @@ SetShooterLiftState::SetShooterLiftState(bool up)
 void SetShooterLiftState::Initialize() {
 	if(up) {
 		shooterLift->GoToHighAngle();
-		cameraTilt->GoToHighAngle();
 	}
 	else {
 		shooterLift->GoToLowAngle();
-		cameraTilt->GoToLowAngle();
 	}
 	
 	

@@ -30,8 +30,8 @@ void TurnByXDegrees::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool TurnByXDegrees::IsFinished() {
 	return counter > 10
-			|| fabs(oi->GetLeftJoystick()->GetY())>0.3   
-			|| fabs(oi->GetRightJoystick()->GetY())>0.3 ;
+			|| fabs(oi->GetMainLeft())>0.3   
+			|| fabs(oi->GetMainRight())>0.3 ;
 }
 
 // Called once after isFinished returns true

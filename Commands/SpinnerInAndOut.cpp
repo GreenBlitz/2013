@@ -4,7 +4,7 @@
 
 SpinnerInAndOut::SpinnerInAndOut() {
 	AddSequential(new SetSpinnerState(false));
-	AddSequential(new WaitCommand(0.2));
+	AddSequential(new WaitCommand(0.37));
 	AddSequential(new SetSpinnerState(true));
 }
 
